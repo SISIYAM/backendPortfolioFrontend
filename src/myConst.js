@@ -3,6 +3,7 @@ const baseUrl = "http://localhost:3000/api";
 const loginUrl = `${baseUrl}/auth/login`;
 const signUpUrl = `${baseUrl}/auth/add`;
 const authenticateUrl = `${baseUrl}/auth/getUser`;
+const addProjectUrl = `${baseUrl}/projects/add`;
 
 // methods for manage cooke
 
@@ -29,4 +30,11 @@ function getCookie(key) {
 }
 
 export default baseUrl;
-export { loginUrl, signUpUrl, setCookie, getCookie, authenticateUrl };
+export {
+  loginUrl,
+  signUpUrl,
+  setCookie,
+  getCookie,
+  authenticateUrl,
+  addProjectUrl,
+};

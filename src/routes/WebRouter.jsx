@@ -10,6 +10,7 @@ import Home from "../components/Home";
 import App from "../App";
 import Login from "../components/login/Login";
 import Logout from "../components/Logout";
+import Error from "../components/Error";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route path="project/add" element={<Form />} />
       <Route path="login" element={<Login />} />
       <Route path="logout" element={<Logout />} />
+      <Route path="*" element={<Error />} />
     </Route>
   )
 );

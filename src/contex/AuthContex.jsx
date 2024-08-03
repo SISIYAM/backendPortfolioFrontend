@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error.response.data);
-      return error.response.data.success;
+      return false;
     }
   };
 

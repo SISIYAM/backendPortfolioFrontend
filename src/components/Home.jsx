@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import { useAuth } from "../contex/AuthContex";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
 
 function Home() {
   const { verifyLoggedIn } = useAuth();
@@ -24,6 +25,7 @@ function Home() {
 
   return (
     <>
+      <Navbar />
       <h1>Home</h1>
       <h1>Home</h1>
       <h1>Home</h1>

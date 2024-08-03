@@ -101,7 +101,7 @@ body {
   text-decoration: underline;
 }
 
-button {
+.loginBtn {
   margin: 15px 0;
   width: 100%;
   height: 50px;
@@ -118,7 +118,7 @@ button {
     -5px -5px 10px #ffffff73;
 }
 
-button:focus {
+.loginBtn:focus {
   color: #3498db;
   box-shadow: inset 2px 2px 5px #BABECC,
     inset -5px -5px 10px #ffffff73;

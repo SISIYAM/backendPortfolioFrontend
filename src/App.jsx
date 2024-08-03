@@ -1,13 +1,14 @@
 import React from "react";
-import Navbar from "./components/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import { AuthProvider } from "./contex/AuthContex";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
       <AuthProvider>
-        <Navbar />
         <Outlet />
+        <ToastContainer theme="dark" />
       </AuthProvider>
     </>
   );

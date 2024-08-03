@@ -4,6 +4,7 @@ import "./login.css";
 import { loginUrl } from "../../myConst";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("sam@sam.com");
@@ -42,15 +43,8 @@ function Login() {
           }
         });
     } catch (error) {
-      if (error.response) {
-        console.log(error.response.data);
-      } else if (error.request) {
-        // if the request was made but no response was received
-        console.log("Error request:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error message:", error.message);
-      }
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -82,7 +76,9 @@ function Login() {
           <div className="forgot-pass">
             <a href="#">Forgot Password?</a>
           </div>
-          <button type="submit">Sign in</button>
+          <button type="submit" className="loginBtn">
+            Sign in
+          </button>
           <div className="sign-up">
             Not a member?
             <a href="#">signup now</a>

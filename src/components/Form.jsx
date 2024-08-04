@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addProjectUrl } from "../myConst";
 import Navbar from "../components/Navbar/Navbar";
+import { toast } from "react-toastify";
 
 function Form() {
   const { verifyLoggedIn } = useAuth();
@@ -11,7 +12,9 @@ function Form() {
 
   const [backendFields, setBackendFields] = useState([]);
   const [frontendFields, setFrontendFields] = useState([]);
+  const [images, setImages] = useState([]);
 
+  // verify user login
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -63,25 +66,59 @@ function Form() {
     setBackendFields(newFields);
   };
 
+  // handle file upload
+  const handleFileChange = (e) => {
+    setImages([...e.target.files]);
+  };
+
   // handle from submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      frontEnd: frontendFields,
-      backEnd: backendFields,
-    };
+    // const formData = {
+    //   title: e.target.title.value,
+    //   description: e.target.description.value,
+    //   frontEnd: frontendFields,
+    //   backEnd: backendFields,
+    // };
+
+    const formData = new FormData();
+    formData.append("title", e.target.title.value);
+    formData.append("description", e.target.description.value);
+    formData.append("frontEnd", JSON.stringify(frontendFields));
+    formData.append("backEnd", JSON.stringify(backendFields));
+
+    // Append each image file to formData
+    Array.from(images).forEach((image) => {
+      formData.append("images", image);
+    });
+
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
 
     try {
       const response = await axios.post(addProjectUrl, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           "auth-token": localStorage.getItem("auth-token"),
         },
       });
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+      // Reset form fields
+      e.target.reset();
+      setFrontendFields([]);
+      setBackendFields([]);
+      setImages([]);
+
       console.log(response.data);
     } catch (error) {
       console.log(error.response.data.errors);
+      error.response.data.errors.forEach((element) => {
+        toast.warn(element.msg);
+      });
     }
   };
 
@@ -181,6 +218,17 @@ function Form() {
                           </div>
                         );
                       })}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="" className="text-dark">
+                        Upload Images
+                      </label>
+                      <input
+                        type="file"
+                        multiple
+                        className="form-control"
+                        onChange={handleFileChange}
+                      />
                     </div>
                     <button type="submit" className="btn btn-primary">
                       Save

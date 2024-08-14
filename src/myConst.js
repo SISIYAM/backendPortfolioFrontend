@@ -6,6 +6,8 @@ const authenticateUrl = `${baseUrl}/auth/getUser`;
 const addProjectUrl = `${baseUrl}/projects/add`;
 const fetchProjects = `${baseUrl}/projects/fetch`;
 const updateProject = `${baseUrl}/projects/update`;
+const fetchImageUrl = `${baseUrl}/projects/fetch/images`;
+const assetsBaseUrl = `http://localhost:3000`;
 
 // methods for manage cooke
 
@@ -41,4 +43,6 @@ export {
   addProjectUrl,
   fetchProjects,
   updateProject,
+  fetchImageUrl,
+  assetsBaseUrl,
 };

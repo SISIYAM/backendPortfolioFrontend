@@ -36,7 +36,6 @@ function Login() {
             console.log({
               success: true,
               message: "Verified successfully",
-              token: localStorage.getItem("auth-token"),
             });
 
             navigate("/");

@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import "../assets/style.css";
 import axios from "axios";
-import { fetchProjects } from "../myConst";
+import { deleteProjectUrl, fetchProjects } from "../myConst";
 import Modal from "./Modal";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 function Home() {
   const { verifyLoggedIn } = useAuth();
@@ -56,6 +58,44 @@ function Home() {
       document.getElementById("exampleModal")
     );
     modal.show();
+    console.log(project.frontEnd);
+  };
+
+  // handle delete btn
+  const handleDelete = async (projectId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      // Swal.fire(
+      //   'Deleted!',
+      //   'Your item has been deleted.',
+      //   'success'
+      // );
+
+      try {
+        const response = await axios.delete(
+          `${deleteProjectUrl}/${projectId}`,
+          {
+            headers: {
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
+        if (response.data.success) {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
   };
 
   return (
@@ -79,26 +119,37 @@ function Home() {
                     </tr>
                   </thead>
                   <tbody>
-                    {projects.map((res, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{res.title}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => handleClick(res)}
-                          >
-                            Edit
-                          </button>
-                        </td>
-                        <td>
-                          <button className="btn btn-danger btn-sm">
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {projects.length > 0 ? (
+                      projects.map((res, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{res.title}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => handleClick(res)}
+                            >
+                              Edit
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => handleDelete(res._id)}
+                              className="btn btn-danger btn-sm"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <div>
+                        <p className="alert alert-danger m-3">
+                          Projects not found
+                        </p>
+                      </div>
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -8,6 +8,8 @@ const fetchProjects = `${baseUrl}/projects/fetch`;
 const updateProject = `${baseUrl}/projects/update`;
 const fetchImageUrl = `${baseUrl}/projects/fetch/images`;
 const assetsBaseUrl = `http://localhost:3000`;
+const deleteProjectUrl = `${baseUrl}/projects/delete`;
+const deleteImageUrl = `${baseUrl}/projects/delete/image`;
 
 // methods for manage cooke
 
@@ -45,4 +47,6 @@ export {
   updateProject,
   fetchImageUrl,
   assetsBaseUrl,
+  deleteProjectUrl,
+  deleteImageUrl,
 };

@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { assetsBaseUrl, fetchImageUrl, updateProject } from "../myConst";
+import {
+  assetsBaseUrl,
+  deleteImageUrl,
+  fetchImageUrl,
+  updateProject,
+} from "../myConst";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Modal({ id, title, description, frontEnd, backEnd }) {
   const [backendFields, setBackendFields] = useState(backEnd);
@@ -69,9 +75,11 @@ function Modal({ id, title, description, frontEnd, backEnd }) {
     formData.append("backEnd", JSON.stringify(backendFields));
     formData.append("status", true);
 
-    newImages.forEach((image) => {
-      formData.append("images", image);
-    });
+    if (newImages) {
+      newImages.forEach((image) => {
+        formData.append("images", image);
+      });
+    }
 
     try {
       const response = await axios.put(`${updateProject}/${id}`, formData, {
@@ -94,7 +102,7 @@ function Modal({ id, title, description, frontEnd, backEnd }) {
 
   useEffect(() => {
     fetchImages();
-  }, [id]);
+  }, [id, images]);
 
   const fetchImages = async () => {
     try {
@@ -109,6 +117,34 @@ function Modal({ id, title, description, frontEnd, backEnd }) {
       }
     } catch (error) {
       console.log(error.response.data.message);
+    }
+  };
+
+  const handleImageDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.delete(`${deleteImageUrl}/${id}`, {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        });
+
+        if (response.data.success) {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        console.log(error.response.data);
+      }
     }
   };
 
@@ -230,16 +266,31 @@ function Modal({ id, title, description, frontEnd, backEnd }) {
                   images.map((res, i) => {
                     return (
                       <>
-                        <img
-                          style={{
-                            height: "70px",
-                            width: "175px",
-                            border: "1px solid #000000",
-                          }}
-                          key={i}
-                          src={`${assetsBaseUrl}/${res.path}`}
-                          alt={`....${i}`}
-                        />{" "}
+                        <div key={i}>
+                          <img
+                            style={{
+                              height: "70px",
+                              width: "175px",
+                              border: "1px solid #000000",
+                            }}
+                            key={i}
+                            src={`${assetsBaseUrl}/${res.path}`}
+                            alt={`....${i}`}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleImageDelete(res._id)}
+                            className="mx-5 "
+                            style={{
+                              padding: "2px 5px",
+                              backgroundColor: "red",
+                              color: "#fff",
+                              border: "none",
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </div>
                         <br />
                         <br />
                       </>

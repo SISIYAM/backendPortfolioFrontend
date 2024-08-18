@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Login() {
-  const [email, setEmail] = useState("sam@sam.com");
-  const [password, setPassword] = useState("savoma");
+  const [email, setEmail] = useState("si31siyam@gmail.com");
+  const [password, setPassword] = useState("siyam@.00");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();

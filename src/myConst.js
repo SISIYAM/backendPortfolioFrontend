@@ -1,5 +1,5 @@
 // urls
-const baseUrl = "http://localhost:3000/api";
+const baseUrl = "https://api-portfolio-xldg.onrender.com/api";
 const loginUrl = `${baseUrl}/auth/login`;
 const signUpUrl = `${baseUrl}/auth/add`;
 const authenticateUrl = `${baseUrl}/auth/getUser`;
@@ -7,7 +7,7 @@ const addProjectUrl = `${baseUrl}/projects/add`;
 const fetchProjects = `${baseUrl}/projects/fetch`;
 const updateProject = `${baseUrl}/projects/update`;
 const fetchImageUrl = `${baseUrl}/projects/fetch/images`;
-const assetsBaseUrl = `http://localhost:3000`;
+const assetsBaseUrl = `https://api-portfolio-xldg.onrender.com/`;
 const deleteProjectUrl = `${baseUrl}/projects/delete`;
 const deleteImageUrl = `${baseUrl}/projects/delete/image`;
 

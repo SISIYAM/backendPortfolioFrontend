@@ -7,7 +7,7 @@ const addProjectUrl = `${baseUrl}/projects/add`;
 const fetchProjects = `${baseUrl}/projects/fetch`;
 const updateProject = `${baseUrl}/projects/update`;
 const fetchImageUrl = `${baseUrl}/projects/fetch/images`;
-const assetsBaseUrl = `https://api-portfolio-xldg.onrender.com/`;
+const assetsBaseUrl = `https://api-portfolio-xldg.onrender.com`;
 const deleteProjectUrl = `${baseUrl}/projects/delete`;
 const deleteImageUrl = `${baseUrl}/projects/delete/image`;
 
